@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-submenulayout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './submenulayout.component.html',
   styleUrl: './submenulayout.component.scss'
 })
@@ -27,7 +28,7 @@ export class SubmenulayoutComponent {
       title: 'Employee',
       children: [
         {
-          title: 'New Employee',
+          title: 'Employee List',
           route: 'employee'
         },
         {
@@ -55,14 +56,14 @@ export class SubmenulayoutComponent {
     },
   ]
 
+  constructor(private router: Router) { }
+
   expandtitle: string = '';
   expandMenu(title: string) {
-    console.log(this.expandtitle);
+    this.expandtitle = this.expandtitle === title ? '' : title;
+  }
 
-    if (this.expandtitle === title) {
-      this.expandtitle = '';
-    } else {
-      this.expandtitle = title;
-    }
+  isActive(route: string): boolean {
+    return this.router.url.includes(route);
   }
 }

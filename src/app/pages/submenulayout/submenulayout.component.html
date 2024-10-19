@@ -8,21 +8,22 @@
                 <span class="fs-5 fw-semibold">Collapsible</span>
             </a>
             <ul class="list-unstyled ps-0">
-                @for (item of menuList; track $index) {
-                <li class="mb-1">
+                <li *ngFor="let item of menuList; let i = index" class="mb-1">
                     <button (click)="expandMenu(item.title)"
-                        [className]="expandtitle==item.title?'btn btn-toggle align-items-center rounded':'btn btn-toggle align-items-center rounded collapsed'">
-                        {{item.title}}
+                        [class]="expandtitle === item.title ? 'btn btn-toggle align-items-center rounded' : 'btn btn-toggle align-items-center rounded collapsed'">
+                        {{ item.title }}
                     </button>
-                    <div id="home-collapse" [className]="expandtitle==item.title?'collapse show':'collapse'">
+                    <div [class]="expandtitle === item.title ? 'collapse show' : 'collapse'">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            @for (child of item.children; track $index) {
-                            <li><a [routerLink]="child.route" class="link-dark rounded">{{child.title}}</a></li>
-                            }
+                            <li *ngFor="let child of item.children; let j = index">
+                                <a [routerLink]="child.route" routerLinkActive="active"
+                                    [class]="isActive(child.route) ? 'link-dark rounded active' : 'link-dark rounded'">
+                                    {{ child.title }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
-                }
             </ul>
         </div>
     </div>
